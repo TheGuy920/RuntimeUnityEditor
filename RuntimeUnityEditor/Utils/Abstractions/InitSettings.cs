@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions
 {
+    /// <summary>
+    /// Collection of things required for RUE to be successfully initialized.
+    /// </summary>
     public abstract class InitSettings
     {
         /// <summary>

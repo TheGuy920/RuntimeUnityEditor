@@ -14,5 +14,10 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries {
         {
             return StaticType != null;
         }
+
+        public override void ShowContextMenu()
+        {
+            ContextMenu.Instance.Show(StaticType, null);
+        }
     }
 }

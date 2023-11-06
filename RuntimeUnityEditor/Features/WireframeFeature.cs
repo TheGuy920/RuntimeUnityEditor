@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
 using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
+#pragma warning disable CS1591
 
 namespace Plasma.Mods.RuntimeUnityEditor.Core
 {
+    /// <summary>
+    /// Feature that turns on Unity's built-in wireframe mode.
+    /// </summary>
     public sealed class WireframeFeature : FeatureBase<WireframeFeature>
     {
         private static readonly Dictionary<Camera, CameraClearFlags> _origFlags = new Dictionary<Camera, CameraClearFlags>();

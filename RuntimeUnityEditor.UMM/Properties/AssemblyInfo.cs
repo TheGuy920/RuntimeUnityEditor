@@ -1,14 +1,14 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using PlasmaAPI.Mods.RuntimeUnityEditor.Core;
+using RuntimeUnityEditor.Core;
 
-[assembly: AssemblyTitle("RuntimeUnityEditor.Bepin5")]
+[assembly: AssemblyTitle("RuntimeUnityEditor.UMM")]
 [assembly: AssemblyDescription("In-game inspector, editor and interactive console for applications made with Unity3D game engine")]
 [assembly: AssemblyCompany("https://github.com/ManlyMarco/RuntimeUnityEditor")]
-[assembly: AssemblyProduct("RuntimeUnityEditor.Bepin5")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyProduct("RuntimeUnityEditor.UMM")]
+[assembly: AssemblyCopyright("Copyright ©  2023")]
 
 [assembly: ComVisible(false)]
-[assembly: Guid("e64cb875-bafa-4b0f-bdc9-e33a15d5a87e")]
+[assembly: Guid("bd33ca70-24b9-4e80-908f-3e3a3c264904")]
 
 [assembly: AssemblyVersion(RuntimeUnityEditorCore.Version)]

@@ -15,6 +15,9 @@ using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 
 namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils.ObjectDumper
 {
+    /// <summary>
+    /// Tries to dump contents of objects into a text form.
+    /// </summary>
     public static class Dumper
     {
         public static string DumpToTempFile(object value, string name)
@@ -74,7 +77,7 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils.ObjectDumper
             }
 
             var isString = value is string;
-            var typeName = value.GetType().FullName;
+            var typeName = value.GetType().GetSourceCodeRepresentation();
             var stringValue = value.ToString();
             if (value is Exception ex)
                 stringValue = ex.GetType().Name + ": " + ex.Message;

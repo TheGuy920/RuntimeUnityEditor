@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries;
 using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
@@ -20,7 +21,7 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector
 
         public static string ObjectToString(object value)
         {
-            var isNull = value.IsNullOrDestroyed();
+            var isNull = value.IsNullOrDestroyedStr();
             if (isNull != null) return isNull;
 
             switch (value)
@@ -57,6 +58,10 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector
                 return "IS ENUMERABLE";
             }
 
+            var inheritedConverter = _toStringConverters.FirstOrDefault(x => x.Key.IsAssignableFrom(valueType));
+            if (inheritedConverter.Key != null)
+                return inheritedConverter.Value(value);
+
             try
             {
                 if (valueType.IsGenericType)
@@ -83,9 +88,9 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector
         {
             if (unityAction == null) return "[NULL]";
             string str;
-            var isNull = unityAction.Target.IsNullOrDestroyed();
+            var isNull = unityAction.Target.IsNullOrDestroyedStr();
             if (isNull != null) str = "[" + isNull + "]";
-            else str = unityAction.Target.GetType().FullName;
+            else str = unityAction.Target.GetType().GetSourceCodeRepresentation();
             var actionString = $"{str}.{unityAction.Method.Name}";
             return actionString;
         }
@@ -95,7 +100,7 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector
             if (eventObj == null) return "[NULL]";
             if (i < 0 || i >= eventObj.GetPersistentEventCount()) return "[Event index out of range]";
             // It's fine to use ? here because GetType works fine on disposed objects and we want to know the type name
-            return $"{eventObj.GetPersistentTarget(i)?.GetType().FullName ?? "[NULL]"}.{eventObj.GetPersistentMethodName(i)}";
+            return $"{eventObj.GetPersistentTarget(i)?.GetType().GetSourceCodeRepresentation() ?? "[NULL]"}.{eventObj.GetPersistentMethodName(i)}";
         }
 
         private static readonly Dictionary<Type, bool> _canCovertCache = new Dictionary<Type, bool>();
@@ -158,10 +163,10 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector
             if (value is string str)
                 return str;
 
-            if(value == null && valueType == typeof(string))
+            if (value == null && valueType == typeof(string))
                 return "";
 
-            var isNull = value.IsNullOrDestroyed();
+            var isNull = value.IsNullOrDestroyedStr();
             if (isNull != null) return isNull;
 
             var typeConverter = TomlTypeConverter.GetConverter(valueType);

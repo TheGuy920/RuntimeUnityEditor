@@ -7,19 +7,38 @@ using UnityEngine;
 
 namespace Plasma.Mods.RuntimeUnityEditor.Core
 {
-    public class WindowManager : IFeature
+    /// <summary>
+    /// Taskbar with controls for all of the RUE features.
+    /// Avoid using this class directly, new features can be added with <see cref="RuntimeUnityEditorCore.AddFeature"/> instead.
+    /// </summary>
+    public class Taskbar : IFeature
     {
         private int _windowId;
         private Rect _windowRect;
         private List<IFeature> _orderedFeatures;
         private string _title;
 
-        public static WindowManager Instance { get; private set; }
+        /// <summary>
+        /// Current instance.
+        /// </summary>
+        public static Taskbar Instance { get; private set; }
 
+#pragma warning disable CS0618
+        /// <summary>
+        /// Text shown in the title bar of the taskbar.
+        /// </summary>
         protected string GetTitle() => RuntimeUnityEditorCore.Instance.ShowHotkey == KeyCode.None ? _title : _title + $" / Press {RuntimeUnityEditorCore.Instance.ShowHotkey} to show/hide";
+#pragma warning restore CS0618
+        /// <summary>
+        /// Height of the taskbar.
+        /// </summary>
         public int Height => (int)_windowRect.height;
 
-        public WindowManager()
+        /// <summary>
+        /// Do not create additional instances or things will break.
+        /// This has to be public or things will break.
+        /// </summary>
+        public Taskbar()
         {
             Instance = this;
         }
@@ -30,10 +49,11 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core
             _title = $"{RuntimeUnityEditorCore.GUID} v{RuntimeUnityEditorCore.Version}";
         }
 
+        /// <summary>
+        /// Set features shown in the taskbar.
+        /// </summary>
         public void SetFeatures(List<IFeature> initializedFeatures)
         {
-            //var groups = initializedFeatures.ToLookup(x => x.DisplayType);
-            //groups[FeatureDisplayType.Window]
             _orderedFeatures = initializedFeatures.OrderByDescending(x => x.DisplayType).ThenBy(x => x.DisplayName).ToList();
         }
 
@@ -66,7 +86,7 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core
                         if (GUILayout.Button("Reset"))
                         {
                             foreach (var window in _orderedFeatures.OfType<IWindow>())
-                                window.ResetWindowRect();
+                                WindowManager.ResetWindowRect(window);
                         }
                         firstFeature = false;
                         GUI.color = Color.white;
@@ -102,6 +122,9 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core
             GUILayout.EndHorizontal();
         }
 
+        /// <summary>
+        /// Show the taskbar, and by extension entire RUE interface. Use <see cref="RuntimeUnityEditorCore.Show"/> instead.
+        /// </summary>
         public bool Enabled { get; set; }
         void IFeature.OnUpdate() { }
         void IFeature.OnLateUpdate() { }

@@ -6,21 +6,51 @@ using UnityEngine;
 
 namespace Plasma.Mods.RuntimeUnityEditor.Core
 {
+    /// <summary>
+    /// Feature for use with RuntimeUnityEditor that has a GUILayout window. Custom windows can be added with <see cref="RuntimeUnityEditorCore.AddFeature"/>.
+    /// Consider using <see cref="Window{T}"/> instead of the bare interface.
+    /// </summary>
     public interface IWindow : IFeature
     {
+        /// <summary>
+        /// Title of the window shown in the title bar and messages related to the window.
+        /// </summary>
         string Title { get; set; }
+        /// <summary>
+        /// ID of the GUILayout window. Set to a unique value automatically during initialization.
+        /// </summary>
         int WindowId { get; set; }
+        /// <summary>
+        /// Size and position of the window, including borders and title bar.
+        /// </summary>
         Rect WindowRect { get; set; }
+        /// <summary>
+        /// Minimum size of the window (width, height).
+        /// </summary>
         Vector2 MinimumSize { get; set; }
-        void ResetWindowRect();
+        /// <summary>
+        /// Default position of this window.
+        /// </summary>
+        ScreenPartition DefaultScreenPosition { get; }
     }
 
+    /// <summary>
+    /// Base implementation of <see cref="T:RuntimeUnityEditor.Core.IWindow" />.
+    /// <typeparamref name="T" /> should be your derived class's Type, e.g. <code>public class MyWindow : Window&lt;MyWindow&gt;</code>
+    /// </summary>
+    /// <inheritdoc cref="IWindow" />
     public abstract class Window<T> : FeatureBase<T>, IWindow where T : Window<T>
     {
-        protected const int ScreenOffset = 10;
-        protected const int SideWidth = 350;
+        /// <summary>
+        /// Default width of tooltips shown inside windows.
+        /// </summary>
+        protected const int DefaultTooltipWidth = 400;
 
-        private const int TooltipWidth = 400;
+        /// <summary>
+        /// Width of tooltips shown inside this window.
+        /// </summary>
+        public int TooltipWidth { get; set; } = DefaultTooltipWidth;
+
         // ReSharper disable StaticMemberInGenericType
         private static GUIStyle _tooltipStyle;
         private static GUIContent _tooltipContent;
@@ -31,25 +61,37 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core
         private Rect _windowRect;
         private Action<Rect> _confRect;
 
+        /// <summary>
+        /// Create a new window instance, should only ever be called once.
+        /// </summary>
         protected Window()
         {
             DisplayType = FeatureDisplayType.Window;
             SettingCategory = "Windows";
         }
 
+        /// <inheritdoc cref="FeatureBase{T}.AfterInitialized"/>
         protected override void AfterInitialized(InitSettings initSettings)
         {
             base.AfterInitialized(initSettings);
             WindowId = base.GetHashCode();
             _confRect = initSettings.RegisterSetting(SettingCategory, DisplayName + " window size", WindowRect, string.Empty, b => WindowRect = b);
+
+#pragma warning disable CS0618
+            // Backwards compat with CheatTools
+            if (DefaultScreenPosition == ScreenPartition.Default && GetDefaultWindowRect(new Rect(0, 0, 1600, 900)) != default)
+                DefaultScreenPosition = ScreenPartition.LeftLower;
+#pragma warning restore CS0618
         }
 
+        /// <inheritdoc cref="FeatureBase{T}.DisplayName"/>
         public override string DisplayName
         {
             get => _displayName ?? (_displayName = Title ?? base.DisplayName);
             set => _displayName = value;
         }
 
+        /// <inheritdoc cref="FeatureBase{T}.OnGUI"/>
         protected override void OnGUI()
         {
             if (!_canShow) return;
@@ -98,7 +140,7 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core
             WindowRect = IMGUIUtils.DragResizeEat(id, WindowRect);
         }
 
-        private static void DrawTooltip(Rect area)
+        private void DrawTooltip(Rect area)
         {
             if (!string.IsNullOrEmpty(GUI.tooltip))
             {
@@ -134,10 +176,11 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core
             }
         }
 
+        /// <inheritdoc cref="FeatureBase{T}.OnVisibleChanged"/>
         protected override void OnVisibleChanged(bool visible)
         {
             // If the taskbar didn't have a chance to initialize yet, wait for a frame. Necessary to calculate free screen space.
-            if (visible && WindowManager.Instance.Height == 0)
+            if (visible && Taskbar.Instance.Height == 0)
             {
                 // todo more efficient way?
                 IEnumerator DelayedVisible()
@@ -153,66 +196,71 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core
             }
         }
 
+        /// <inheritdoc cref="FeatureBase{T}.VisibleChanged"/>
         protected override void VisibleChanged(bool visible)
         {
             if (visible)
             {
-                if (!IsWindowRectValid())
+                if (!WindowManager.IsWindowRectValid(this))
                     ResetWindowRect();
 
                 _canShow = true;
             }
         }
 
+        /// <summary>
+        /// Discard current window size and position, and set the default ones for this window.
+        /// </summary>
         public void ResetWindowRect()
         {
-            var screenRect = new Rect(
-                x: ScreenOffset,
-                y: ScreenOffset,
-                width: Screen.width - ScreenOffset * 2,
-                height: Screen.height - ScreenOffset * 2 - WindowManager.Instance.Height);
-            WindowRect = GetDefaultWindowRect(screenRect);
+            WindowManager.ResetWindowRect(this);
         }
 
-        private bool IsWindowRectValid()
+        /// <summary>
+        /// Get default size of this window (including border and title bar) for the given screen rect.
+        /// The screen rect includes only useful work area (i.e. it excludes any margins and taskbar).
+        /// </summary>
+        [Obsolete("No longer used, set DefaultScreenPosition instead", false)]
+        protected virtual Rect GetDefaultWindowRect(Rect screenClientRect)
         {
-            return WindowRect.width >= MinimumSize.x &&
-                   WindowRect.height >= MinimumSize.y &&
-                   WindowRect.x < Screen.width - ScreenOffset &&
-                   WindowRect.y < Screen.height - ScreenOffset &&
-                   WindowRect.x >= -WindowRect.width + ScreenOffset &&
-                   WindowRect.y >= -WindowRect.height + ScreenOffset;
+            return default;
         }
 
-        protected abstract Rect GetDefaultWindowRect(Rect screenRect);
-
-        public static Rect MakeDefaultWindowRect(Rect screenRect, TextAlignment side)
+        /// <summary>
+        /// Get default size of a window for a given resolution and side of the screen. Center is wider than the sides.
+        /// </summary>
+        [Obsolete("Use set DefaultScreenPosition or use WindowManager.MakeDefaultWindowRect instead", true)]
+        public static Rect MakeDefaultWindowRect(Rect screenClientRect, TextAlignment side)
         {
             switch (side)
             {
                 case TextAlignment.Left:
-                    return new Rect(screenRect.xMin, screenRect.yMin, SideWidth, screenRect.height / 2);
+                    return WindowManager.MakeDefaultWindowRect(screenClientRect, ScreenPartition.LeftUpper);
 
                 case TextAlignment.Center:
-                    var centerWidth = (int)Mathf.Min(850, screenRect.width);
-                    var centerX = (int)(screenRect.xMin + screenRect.width / 2 - Mathf.RoundToInt((float)centerWidth / 2));
-
-                    var inspectorHeight = (int)(screenRect.height / 4) * 3;
-                    return new Rect(centerX, screenRect.yMin, centerWidth, inspectorHeight);
+                    return WindowManager.MakeDefaultWindowRect(screenClientRect, ScreenPartition.CenterUpper);
 
                 case TextAlignment.Right:
-                    return new Rect(screenRect.xMax - SideWidth, screenRect.yMin, SideWidth, screenRect.height);
+                    return WindowManager.MakeDefaultWindowRect(screenClientRect, ScreenPartition.Right);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(side), side, null);
             }
         }
-        
+
+        /// <summary>
+        /// Draw contents of the window.
+        /// This runs inside of <see cref="GUILayout.Window(int,UnityEngine.Rect,UnityEngine.GUI.WindowFunction,string,UnityEngine.GUILayoutOption[])"/>
+        /// so all <see cref="GUILayout"/> methods can be used to construct the interface.
+        /// </summary>
         protected abstract void DrawContents();
 
+        /// <inheritdoc cref="IWindow.Title"/>
         public virtual string Title { get; set; }
+        /// <inheritdoc cref="IWindow.WindowId"/>
         public int WindowId { get; set; }
 
+        /// <inheritdoc cref="IWindow.WindowRect"/>
         public virtual Rect WindowRect
         {
             get => _windowRect;
@@ -226,6 +274,10 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core
             }
         }
 
+        /// <inheritdoc cref="IWindow.MinimumSize"/>
         public Vector2 MinimumSize { get; set; } = new Vector2(100, 100);
+
+        /// <inheritdoc cref="IWindow.DefaultScreenPosition" />
+        public ScreenPartition DefaultScreenPosition { get; protected set; } = ScreenPartition.Default;
     }
 }

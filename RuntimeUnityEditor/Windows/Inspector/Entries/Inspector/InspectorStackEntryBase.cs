@@ -27,5 +27,7 @@ namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries
         }
 
         public Vector2 ScrollPosition;
+
+        public abstract void ShowContextMenu();
     }
 }
