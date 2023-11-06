@@ -1,7 +1,7 @@
-﻿using RuntimeUnityEditor.Core.Utils.Abstractions;
+﻿using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Utils
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils
 {
     /// <summary>
     /// Utility methods for working with IMGUI / OnGui.

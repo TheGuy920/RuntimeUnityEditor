@@ -1,4 +1,4 @@
-﻿namespace RuntimeUnityEditor.Core.Gizmos.lib
+﻿namespace Plasma.Mods.RuntimeUnityEditor.Core.Gizmos.lib
 {
     public class Constants
     {

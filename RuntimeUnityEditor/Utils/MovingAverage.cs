@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RuntimeUnityEditor.Core.Utils
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils
 {
     internal class MovingAverage
     {

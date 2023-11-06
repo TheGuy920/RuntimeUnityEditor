@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core
+namespace Plasma.Mods.RuntimeUnityEditor.Core
 {
     public sealed class WireframeFeature : FeatureBase<WireframeFeature>
     {

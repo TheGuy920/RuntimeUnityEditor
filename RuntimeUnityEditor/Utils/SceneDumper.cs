@@ -3,17 +3,17 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Utils
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils
 {
     internal static class SceneDumper
     {
         public static void DumpObjects(params GameObject[] objects)
         {
             var fname = Path.GetTempFileName() + ".txt";
-            RuntimeUnityEditorCore.Logger.Log(LogLevel.Info, $"Dumping {objects.Length} GameObjects to {fname}");
+            UnityEngine.Debug.Log( $"Dumping {objects.Length} GameObjects to {fname}");
             using (var f = File.OpenWrite(fname))
             using (var sw = new StreamWriter(f, Encoding.UTF8))
             {
@@ -21,7 +21,7 @@ namespace RuntimeUnityEditor.Core.Utils
                     PrintRecursive(sw, obj);
             }
             var pi = new ProcessStartInfo(fname) { UseShellExecute = true };
-            RuntimeUnityEditorCore.Logger.Log(LogLevel.Info, $"Opening {fname}");
+            UnityEngine.Debug.Log( $"Opening {fname}");
             Process.Start(pi);
         }
 
@@ -51,7 +51,7 @@ namespace RuntimeUnityEditor.Core.Utils
                     }
                     catch (Exception e)
                     {
-                        RuntimeUnityEditorCore.Logger.Log(LogLevel.Debug, e);
+                        UnityEngine.Debug.Log( e);
                     }
                 }
             }

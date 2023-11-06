@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using RuntimeUnityEditor.Core.Inspector;
-using RuntimeUnityEditor.Core.Inspector.Entries;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
-using RuntimeUnityEditor.Core.Utils.ObjectDumper;
+using Plasma.Mods.RuntimeUnityEditor.Core.Inspector;
+using Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.ObjectDumper;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Clipboard
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Clipboard
 {
     public class ClipboardWindow : Window<ClipboardWindow>
     {

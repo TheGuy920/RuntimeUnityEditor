@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RuntimeUnityEditor.Core.Inspector.Entries;
-using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
-using RuntimeUnityEditor.Core.Utils.ObjectDumper;
+using Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.ObjectDumper;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Inspector
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector
 {
     public sealed partial class Inspector : Window<Inspector>
     {
@@ -152,7 +152,7 @@ namespace RuntimeUnityEditor.Core.Inspector
             {
                 while (tab.InspectorStack.Count > 0 && !tab.InspectorStack.Peek().EntryIsValid())
                 {
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Message, $"[{Title}] Removed invalid/removed stack object: \"{tab.InspectorStack.Peek().Name}\"");
+                    UnityEngine.Debug.Log($"[{Title}] Removed invalid/removed stack object: \"{tab.InspectorStack.Peek().Name}\"");
                     tab.Pop();
                 }
 
@@ -449,7 +449,7 @@ namespace RuntimeUnityEditor.Core.Inspector
                 }
                 catch (Exception ex)
                 {
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Error, $"[{Title}] Failed to draw setting {entry?.Name()} - {ex.Message}");
+                    UnityEngine.Debug.LogError( $"[{Title}] Failed to draw setting {entry?.Name()} - {ex.Message}");
                     GUILayout.TextArea(ex.Message, GUI.skin.label, GUILayout.ExpandWidth(true));
                 }
             }

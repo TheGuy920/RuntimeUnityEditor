@@ -1,17 +1,18 @@
-﻿using System;
+﻿using Plasma.Mods.RuntimeUnityEditor.Core.ObjectTree;
+using Plasma.Mods.RuntimeUnityEditor.Core.ObjectView;
+using Plasma.Mods.RuntimeUnityEditor.Core.Profiler;
+using Plasma.Mods.RuntimeUnityEditor.Core.REPL;
+using Plasma.Mods.RuntimeUnityEditor.Core.UI;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using RuntimeUnityEditor.Core.ObjectTree;
-using RuntimeUnityEditor.Core.ObjectView;
-using RuntimeUnityEditor.Core.Profiler;
-using RuntimeUnityEditor.Core.REPL;
-using RuntimeUnityEditor.Core.UI;
-using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using System.Runtime.InteropServices;
 using UnityEngine;
 #pragma warning disable CS0618
 
-namespace RuntimeUnityEditor.Core
+namespace Plasma.Mods.RuntimeUnityEditor.Core
 {
     public class RuntimeUnityEditorCore
     {
@@ -63,7 +64,6 @@ namespace RuntimeUnityEditor.Core
         public static RuntimeUnityEditorCore Instance { get; private set; }
 
         internal static MonoBehaviour PluginObject => _initSettings.PluginMonoBehaviour;
-        internal static ILoggerWrapper Logger => _initSettings.LoggerWrapper;
         private static InitSettings _initSettings;
 
         private readonly List<IFeature> _initializedFeatures = new List<IFeature>();
@@ -98,13 +98,13 @@ namespace RuntimeUnityEditor.Core
                 }
                 catch (Exception e)
                 {
-                    Logger.Log(LogLevel.Warning, $"Failed to initialize {feature.GetType().Name} - " + e);
+                    UnityEngine.Debug.LogWarning( $"Failed to initialize {feature.GetType().Name} - " + e);
                 }
             }
 
             WindowManager.SetFeatures(_initializedFeatures);
+            UnityEngine.Debug.Log( $"Successfully initialized {_initializedFeatures.Count}/{allFeatures.Count} features: {string.Join(", ", _initializedFeatures.Select(x => x.GetType().Name).ToArray())}");
 
-            Logger.Log(LogLevel.Info, $"Successfully initialized {_initializedFeatures.Count}/{allFeatures.Count} features: {string.Join(", ", _initializedFeatures.Select(x => x.GetType().Name).ToArray())}");
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace RuntimeUnityEditor.Core
 
         //public event EventHandler ShowChanged;
 
-        internal void OnGUI()
+        public void OnGUI()
         {
             if (Show)
             {
@@ -158,12 +158,25 @@ namespace RuntimeUnityEditor.Core
                 GUI.skin = originalSkin;
             }
         }
-
-        internal void Update()
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        private static extern short GetAsyncKeyState(int vKey);
+        private static bool IsF12KeyPressed()
         {
-            if (UnityInput.Current.GetKeyDown(ShowHotkey))
+            const int VK_F12 = 0x7B;
+            return (GetAsyncKeyState(VK_F12) & 0x8000) != 0;
+        }
+        private bool waiting_for_release = false;
+        public void Update()
+        {
+            if (IsF12KeyPressed() && !waiting_for_release)
+            {
+                waiting_for_release = true;
                 Show = !Show;
-
+            }
+            else if (!IsF12KeyPressed() && waiting_for_release)
+            {
+                waiting_for_release = false;
+            }
             if (Show)
             {
                 for (var index = 0; index < _initializedFeatures.Count; index++)
@@ -171,7 +184,7 @@ namespace RuntimeUnityEditor.Core
             }
         }
 
-        internal void LateUpdate()
+        public void LateUpdate()
         {
             if (Show)
             {

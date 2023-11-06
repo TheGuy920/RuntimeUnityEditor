@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
 using HarmonyLib;
-using RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Inspector.Entries
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries
 {
     public class MethodCacheEntry : ICacheEntry
     {

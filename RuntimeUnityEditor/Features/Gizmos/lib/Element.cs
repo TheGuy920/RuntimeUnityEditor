@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Gizmos.lib
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Gizmos.lib
 {
     internal class Element
     {

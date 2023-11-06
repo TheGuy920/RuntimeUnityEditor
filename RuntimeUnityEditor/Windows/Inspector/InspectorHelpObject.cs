@@ -1,6 +1,6 @@
-﻿using RuntimeUnityEditor.Core.Inspector.Entries;
+﻿using Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries;
 
-namespace RuntimeUnityEditor.Core.Inspector
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector
 {
     internal class InspectorHelpObject
     {

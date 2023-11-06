@@ -7,9 +7,9 @@
     <ProjectGuid>{E64CB875-BAFA-4B0F-BDC9-E33A15D5A87E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RuntimeUnityEditor.Bepin5</RootNamespace>
-    <AssemblyName>RuntimeUnityEditor.Bepin5</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <RootNamespace>PlasmaAPI.Mods.RuntimeUnityEditor</RootNamespace>
+    <AssemblyName>RuntimeUnityEditor</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -18,10 +18,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>embedded</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\BepInEx\plugins\RuntimeUnityEditor\</OutputPath>
+    <OutputPath>..\..\..\..\SteamLibrary\steamapps\common\Plasma\Mods\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>embedded</DebugType>
@@ -31,17 +32,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BepInEx, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IllusionLibs.BepInEx.5.0.0\lib\net35\BepInEx.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IllusionLibs.HoneySelect.UnityEngine.5.3.5\lib\net35\UnityEngine.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="UnityEngine" >
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Plasma\Plasma_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule" >
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Plasma\Plasma_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +49,10 @@
     <Compile Include="RuntimeUnityEditor5.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\PlasmaAIO\PlasmaAPI\PlasmaMLL.csproj" >
+      <Project>{0F7C5A3D-3A62-47D3-B41E-637EF6B9AE73}</Project>
+      <Name>PlasmaMLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RuntimeUnityEditor\RuntimeUnityEditor.Core.csproj">
       <Project>{a66a97b4-f32f-4748-8332-48f0876f0aac}</Project>
       <Name>RuntimeUnityEditor.Core</Name>
@@ -56,7 +60,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>

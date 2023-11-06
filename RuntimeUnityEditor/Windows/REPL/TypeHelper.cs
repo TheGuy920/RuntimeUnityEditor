@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Text;
 
-namespace RuntimeUnityEditor.Core.REPL
+namespace Plasma.Mods.RuntimeUnityEditor.Core.REPL
 {
     public class TypeHelper
     {

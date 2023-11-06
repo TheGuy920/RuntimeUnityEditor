@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Utils.Abstractions
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions
 {
     public static class UnityFeatureHelper
     {
@@ -18,11 +18,11 @@ namespace RuntimeUnityEditor.Core.Utils.Abstractions
         {
             SupportsScenes = _scene != null && _sceneManager != null;
             if (!SupportsScenes)
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Warning, "UnityEngine.SceneManager and/or UnityEngine.SceneManagement.Scene are not available, some features will be disabled");
+                UnityEngine.Debug.LogWarning( "UnityEngine.SceneManager and/or UnityEngine.SceneManagement.Scene are not available, some features will be disabled");
 
             SupportsCursorIndex = !(typeof(TextEditor).GetProperty("cursorIndex", BindingFlags.Instance | BindingFlags.Public) == null && typeof(TextEditor).GetField("pos", BindingFlags.Instance | BindingFlags.Public) == null);
             if (!SupportsCursorIndex)
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Warning, "TextEditor.cursorIndex and TextEditor.pos are not available, some features will be disabled");
+                UnityEngine.Debug.LogWarning( "TextEditor.cursorIndex and TextEditor.pos are not available, some features will be disabled");
 
             if (SupportsCursorIndex)
             {
@@ -35,13 +35,13 @@ namespace RuntimeUnityEditor.Core.Utils.Abstractions
 
                     if (profilerIsRunning)
                     {
-                        RuntimeUnityEditorCore.Logger.Log(LogLevel.Warning, "Disabling REPL because a profiler is running. This is to prevent the combination of access-modded mcs, profiler and monomod from crashing the process.");
+                        UnityEngine.Debug.LogWarning( "Disabling REPL because a profiler is running. This is to prevent the combination of access-modded mcs, profiler and monomod from crashing the process.");
                         SupportsRepl = false;
                     }
                 }
                 catch (Exception ex)
                 {
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Error, ex);
+                    UnityEngine.Debug.LogError( ex);
                 }
             }
         }
@@ -94,23 +94,23 @@ namespace RuntimeUnityEditor.Core.Utils.Abstractions
             var candidates = new List<string>();
 
             // Redirected by preloader to game root
-            var rootDir = Path.Combine(Application.dataPath, "..");
+            var rootDir = Path.Combine(UnityEngine.Application.dataPath, "..");
             candidates.Add(Path.Combine(rootDir, "output_log.txt"));
 
             // Generated in most versions unless disabled
-            candidates.Add(Path.Combine(Application.dataPath, "output_log.txt"));
+            candidates.Add(Path.Combine(UnityEngine.Application.dataPath, "output_log.txt"));
 
             // Available since 2018.3
-            var prop = typeof(Application).GetProperty("consoleLogPath", BindingFlags.Static | BindingFlags.Public);
+            var prop = typeof(UnityEngine.Application).GetProperty("consoleLogPath", BindingFlags.Static | BindingFlags.Public);
             if (prop != null)
             {
                 var path = prop.GetValue(null, null) as string;
                 candidates.Add(path);
             }
 
-            if (Directory.Exists(Application.persistentDataPath))
+            if (Directory.Exists(UnityEngine.Application.persistentDataPath))
             {
-                var file = Directory.GetFiles(Application.persistentDataPath, "output_log.txt", SearchOption.AllDirectories).FirstOrDefault();
+                var file = Directory.GetFiles(UnityEngine.Application.persistentDataPath, "output_log.txt", SearchOption.AllDirectories).FirstOrDefault();
                 candidates.Add(file);
             }
 

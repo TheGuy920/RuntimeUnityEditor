@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.ObjectTree
+namespace Plasma.Mods.RuntimeUnityEditor.Core.ObjectTree
 {
     /// <summary>
     /// Keeps track of root gameobjects and allows searching objects in the scene
@@ -80,7 +80,7 @@ namespace RuntimeUnityEditor.Core.ObjectTree
 
             if (full)
             {
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Debug, $"Full GameObject list refresh finished in {sw.ElapsedMilliseconds}ms");
+                UnityEngine.Debug.Log( $"Full GameObject list refresh finished in {sw.ElapsedMilliseconds}ms");
 
                 // _lastSearchProperties==true takes too long to open the editor
                 if (_searchResults != null && !_lastSearchProperties && _lastSearchString != null)
@@ -99,7 +99,7 @@ namespace RuntimeUnityEditor.Core.ObjectTree
 
                 _lastSearchString = searchString;
 
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Info, searchProperties ? $"Deep searching for [{searchString}], this can take a while..." : $"Searching for [{searchString}]");
+                UnityEngine.Debug.Log( searchProperties ? $"Deep searching for [{searchString}], this can take a while..." : $"Searching for [{searchString}]");
                 var sw = Stopwatch.StartNew();
 
                 _searchResults = GetRootObjects()
@@ -111,7 +111,7 @@ namespace RuntimeUnityEditor.Core.ObjectTree
                     .Select(x => x.gameObject)
                     .ToList();
 
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Info, $"Search finished in {sw.ElapsedMilliseconds}ms");
+                UnityEngine.Debug.Log( $"Search finished in {sw.ElapsedMilliseconds}ms");
             }
         }
 
@@ -182,7 +182,7 @@ namespace RuntimeUnityEditor.Core.ObjectTree
             // This is around 25% faster than o == null
             // Object.IsNativeObjectAlive would be even better at above 35% but isn't public and reflection would eat the gains
             var isGameObjectNull = (object)o == null || o.GetInstanceID() == 0;
-            System.Diagnostics.Debug.Assert(isGameObjectNull == (o == null));
+            UnityEngine.Debug.Assert(isGameObjectNull == (o == null));
             return isGameObjectNull;
         }
 

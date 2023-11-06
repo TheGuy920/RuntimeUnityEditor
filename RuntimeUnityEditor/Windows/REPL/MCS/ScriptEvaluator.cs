@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using Mono.CSharp;
 
-namespace RuntimeUnityEditor.Core.REPL.MCS
+namespace Plasma.Mods.RuntimeUnityEditor.Core.REPL.MCS
 {
     internal class ScriptEvaluator : Evaluator, IDisposable
     {

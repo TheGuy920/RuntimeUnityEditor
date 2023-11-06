@@ -5,13 +5,13 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using HarmonyLib;
-using RuntimeUnityEditor.Core.Clipboard;
-using RuntimeUnityEditor.Core.Inspector.Entries;
-using RuntimeUnityEditor.Core.UI;
-using RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Clipboard;
+using Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries;
+using Plasma.Mods.RuntimeUnityEditor.Core.UI;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Inspector
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector
 {
     internal static class VariableFieldDrawer
     {

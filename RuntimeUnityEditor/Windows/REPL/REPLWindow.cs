@@ -6,12 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using RuntimeUnityEditor.Core.REPL.MCS;
-using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.REPL.MCS;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.REPL
+namespace Plasma.Mods.RuntimeUnityEditor.Core.REPL
 {
     public sealed class ReplWindow : Window<ReplWindow>
     {
@@ -49,7 +49,7 @@ namespace RuntimeUnityEditor.Core.REPL
                             .SelectMany(Extensions.GetTypesSafe)
                             .Where(x => x.IsPublic && !string.IsNullOrEmpty(x.Namespace))
                             .Select(x => x.Namespace));
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Debug, $"[REPL] Found {_namespaces.Count} public namespaces");
+                    UnityEngine.Debug.Log( $"[REPL] Found {_namespaces.Count} public namespaces");
                 }
                 return _namespaces;
             }
@@ -99,7 +99,7 @@ namespace RuntimeUnityEditor.Core.REPL
             }
             catch (Exception ex)
             {
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Warning, "Failed to initialize REPL environment - " + ex.Message);
+                UnityEngine.Debug.LogWarning( "Failed to initialize REPL environment - " + ex.Message);
             }
         }
 
@@ -123,7 +123,7 @@ namespace RuntimeUnityEditor.Core.REPL
                 if (allLines.Length > 0)
                 {
                     var message = "Executing code from " + autostartFilename;
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Info, message);
+                    UnityEngine.Debug.Log( message);
                     AppendLogLine(message);
                     foreach (var line in allLines)
                         Evaluate(line);
@@ -378,7 +378,7 @@ namespace RuntimeUnityEditor.Core.REPL
             }
             catch (Exception ex)
             {
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Debug, "[REPL] " + ex);
+                UnityEngine.Debug.Log( "[REPL] " + ex);
                 ClearSuggestions();
             }
         }

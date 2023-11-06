@@ -1,8 +1,8 @@
 ﻿using System;
-using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 
-namespace RuntimeUnityEditor.Core
+namespace Plasma.Mods.RuntimeUnityEditor.Core
 {
     public interface IFeature
     {
@@ -108,7 +108,7 @@ namespace RuntimeUnityEditor.Core
                 }
                 catch (Exception e)
                 {
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Error, e);
+                    UnityEngine.Debug.LogError( e);
                 }
             }
         }
@@ -122,7 +122,7 @@ namespace RuntimeUnityEditor.Core
                 }
                 catch (Exception e)
                 {
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Error, e);
+                    UnityEngine.Debug.LogError( e);
                 }
             }
         }
@@ -136,7 +136,7 @@ namespace RuntimeUnityEditor.Core
                 }
                 catch (Exception e)
                 {
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Error, e);
+                    UnityEngine.Debug.LogError( e);
                 }
             }
         }
@@ -158,7 +158,7 @@ namespace RuntimeUnityEditor.Core
             }
             catch (Exception e)
             {
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Error, e);
+                UnityEngine.Debug.LogError( e);
             }
         }
 

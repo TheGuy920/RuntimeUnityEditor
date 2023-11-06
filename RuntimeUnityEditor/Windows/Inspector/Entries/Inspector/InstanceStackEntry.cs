@@ -1,4 +1,4 @@
-﻿namespace RuntimeUnityEditor.Core.Inspector.Entries {
+﻿namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries {
     public class InstanceStackEntry : InspectorStackEntryBase
     {
         public InstanceStackEntry(object instance, string name) : this(instance, name, null) { }

@@ -5,15 +5,15 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Mono.CSharp;
-using RuntimeUnityEditor.Core.Inspector.Entries;
-using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
-using RuntimeUnityEditor.Core.Utils.ObjectDumper;
+using Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.ObjectDumper;
 using UnityEngine;
 using Attribute = System.Attribute;
 using Object = UnityEngine.Object;
 
-namespace RuntimeUnityEditor.Core.REPL
+namespace Plasma.Mods.RuntimeUnityEditor.Core.REPL
 {
     public class REPL : InteractiveBase
     {
@@ -223,7 +223,7 @@ namespace RuntimeUnityEditor.Core.REPL
         [Documentation("message(string) - write a string to log.")]
         public static void message(string message)
         {
-            RuntimeUnityEditorCore.Logger.Log(LogLevel.Message, message);
+            UnityEngine.Debug.Log(message);
         }
 
         [Documentation("paste(index) - paste clipboard contents from a given int index.")]

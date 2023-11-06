@@ -1,8 +1,8 @@
 using System;
-using RuntimeUnityEditor.Core.Gizmos.lib.Drawers;
+using Plasma.Mods.RuntimeUnityEditor.Core.Gizmos.lib.Drawers;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Gizmos.lib
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Gizmos.lib
 {
     /// <summary>
     /// Taken from https://github.com/popcron/gizmos
@@ -31,7 +31,7 @@ namespace RuntimeUnityEditor.Core.Gizmos.lib
             {
                 if (string.IsNullOrEmpty(_prefsKey))
                 {
-                    _prefsKey = $"{SystemInfo.deviceUniqueIdentifier}.{Application.companyName}.{Application.productName}.{Constants.UniqueIdentifier}";
+                    _prefsKey = $"{SystemInfo.deviceUniqueIdentifier}.{UnityEngine.Application.companyName}.{UnityEngine.Application.productName}.{Constants.UniqueIdentifier}";
                 }
 
                 return _prefsKey;

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core
+namespace Plasma.Mods.RuntimeUnityEditor.Core
 {
     public sealed class CursorUnlocker : FeatureBase<CursorUnlocker>
     {

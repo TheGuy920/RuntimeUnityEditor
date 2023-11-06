@@ -1,80 +1,41 @@
 ﻿using System;
+using System.Threading.Tasks;
+using PlasmaAPI;
+using PlasmaAPI.Application;
+/*
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
-using RuntimeUnityEditor.Core;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+*/
+using PlasmaAPI.Mods.RuntimeUnityEditor.Core;
+using PlasmaAPI.Mods.RuntimeUnityEditor.Core.Utils;
+using PlasmaAPI.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Bepin5
+namespace PlasmaAPI.Mods.RuntimeUnityEditor
 {
-    [BepInPlugin(RuntimeUnityEditorCore.GUID, "Runtime Unity Editor", RuntimeUnityEditorCore.Version)]
-    public class RuntimeUnityEditor5 : BaseUnityPlugin
+    public class Initialization
     {
-        public static RuntimeUnityEditorCore Instance { get; private set; }
-
-        private void Start()
+        public Initialization()
         {
-            if (!TomlTypeConverter.CanConvert(typeof(Rect)))
-            {
-                var converter = RuntimeUnityEditor.Core.Utils.TomlTypeConverter.GetConverter(typeof(Rect));
-                TomlTypeConverter.AddConverter(typeof(Rect), new TypeConverter { ConvertToObject = converter.ConvertToObject, ConvertToString = converter.ConvertToString });
-            }
-
-            Instance = new RuntimeUnityEditorCore(new Bep5InitSettings(this));
+            /*
+             * my vars here
+             */
         }
 
-        private void Update()
+
+        public void Start()
         {
-            Instance.Update();
+            /*
+            * start hooks here
+            */
+            PlasmaGame.OnGameInitialization += PlasmaGame_OnGameInitialization;
         }
 
-        private void LateUpdate()
+        private void PlasmaGame_OnGameInitialization()
         {
-            Instance.LateUpdate();
-        }
-
-        private void OnGUI()
-        {
-            Instance.OnGUI();
-        }
-
-        private sealed class Bep5InitSettings : InitSettings
-        {
-            private readonly RuntimeUnityEditor5 _instance;
-
-            public Bep5InitSettings(RuntimeUnityEditor5 instance)
-            {
-                _instance = instance;
-                LoggerWrapper = new Logger5(_instance.Logger);
-            }
-
-            public override Action<T> RegisterSetting<T>(string category, string name, T defaultValue, string description, Action<T> onValueUpdated)
-            {
-                var s = _instance.Config.Bind(category, name, defaultValue, description);
-                s.SettingChanged += (sender, args) => onValueUpdated(s.Value);
-                onValueUpdated(s.Value);
-                return x => s.Value = x;
-            }
-
-            public override MonoBehaviour PluginMonoBehaviour => _instance;
-            public override ILoggerWrapper LoggerWrapper { get; }
-            public override string ConfigPath => Paths.ConfigPath;
-        }
-
-        private sealed class Logger5 : ILoggerWrapper
-        {
-            private readonly ManualLogSource _logger;
-
-            public Logger5(ManualLogSource logger)
-            {
-                _logger = logger;
-            }
-
-            public void Log(Core.Utils.Abstractions.LogLevel logLevel, object content)
-            {
-                _logger.Log((BepInEx.Logging.LogLevel)logLevel, content);
-            }
+            Debug.LogWarning("Creating editor...");
         }
     }
+    
 }

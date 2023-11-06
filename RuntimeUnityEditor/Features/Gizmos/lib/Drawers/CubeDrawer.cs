@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Gizmos.lib.Drawers
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Gizmos.lib.Drawers
 {
     public class CubeDrawer : Drawer
     {

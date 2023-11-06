@@ -3,7 +3,7 @@
 using System.Globalization;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Utils.Abstractions
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions
 {
     public static class ColorUtility
     {

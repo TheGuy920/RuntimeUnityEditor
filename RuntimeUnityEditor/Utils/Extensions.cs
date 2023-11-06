@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using RuntimeUnityEditor.Core.Inspector.Entries;
+using Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Utils
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils
 {
     public static class Extensions
     {

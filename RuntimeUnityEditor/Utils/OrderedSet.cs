@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace RuntimeUnityEditor.Core.ObjectTree
+namespace Plasma.Mods.RuntimeUnityEditor.Core.ObjectTree
 {
     /// <summary>
     /// Based on OrderedSet from answer https://stackoverflow.com/a/17853085 by AndreasHassing and  George Mamaladze

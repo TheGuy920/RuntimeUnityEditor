@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Inspector.Entries
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries
 {
     public abstract class InspectorStackEntryBase
     {

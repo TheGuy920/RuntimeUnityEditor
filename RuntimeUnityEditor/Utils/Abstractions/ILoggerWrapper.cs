@@ -1,4 +1,4 @@
-﻿namespace RuntimeUnityEditor.Core.Utils.Abstractions
+﻿namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions
 {
     public interface ILoggerWrapper
     {

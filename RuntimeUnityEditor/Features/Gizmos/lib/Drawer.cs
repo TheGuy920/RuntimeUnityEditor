@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using RuntimeUnityEditor.Core.Gizmos.lib.Drawers;
+using Plasma.Mods.RuntimeUnityEditor.Core.Gizmos.lib.Drawers;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Gizmos.lib
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Gizmos.lib
 {
     public abstract class Drawer
     {
@@ -48,7 +48,7 @@ namespace RuntimeUnityEditor.Core.Gizmos.lib
                 //        }
                 //        catch (Exception e)
                 //        {
-                //            Debug.LogError($"couldnt register drawer of type {type} because {e.Message}");
+                //            UnityEngine.Debug.LogError($"couldnt register drawer of type {type} because {e.Message}");
                 //        }
                 //    }
                 //}

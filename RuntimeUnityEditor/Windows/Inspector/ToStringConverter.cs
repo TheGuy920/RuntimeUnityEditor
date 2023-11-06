@@ -2,12 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using RuntimeUnityEditor.Core.Inspector.Entries;
-using RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace RuntimeUnityEditor.Core.Inspector
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector
 {
     public static class ToStringConverter
     {

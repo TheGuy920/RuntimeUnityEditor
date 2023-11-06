@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace RuntimeUnityEditor.Core.Gizmos.lib
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Gizmos.lib
 {
     /// <summary>
     /// Taken from https://github.com/popcron/gizmos
@@ -57,7 +57,7 @@ namespace RuntimeUnityEditor.Core.Gizmos.lib
                 {
                     // Unity has a built-in shader that is useful for drawing
                     // simple colored things.
-                    Shader shader = Shader.Find("Hidden/Internal-Colored");
+                    Shader shader = Shader.Find("Plasma/Component Standard v1.3 No Tess");
                     defaultMaterial = new Material(shader)
                     {
                         hideFlags = HideFlags.HideAndDontSave
@@ -88,7 +88,7 @@ namespace RuntimeUnityEditor.Core.Gizmos.lib
                     else
                     {
                         //destroy any extra gizmo instances
-                        if (Application.isPlaying)
+                        if (UnityEngine.Application.isPlaying)
                         {
                             Destroy(gizmosInstances[i]);
                         }
@@ -129,7 +129,7 @@ namespace RuntimeUnityEditor.Core.Gizmos.lib
             get
             {
                 float time = 0f;
-                if (Application.isPlaying)
+                if (UnityEngine.Application.isPlaying)
                 {
                     time = Time.time;
                 }

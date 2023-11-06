@@ -5,14 +5,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using RuntimeUnityEditor.Core.Inspector.Entries;
-using RuntimeUnityEditor.Core.ObjectTree;
-using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.API.Classes;
+using Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries;
+using Plasma.Mods.RuntimeUnityEditor.Core.ObjectTree;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 using Component = UnityEngine.Component;
 
-namespace RuntimeUnityEditor.Core.Inspector
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector
 {
     public sealed partial class Inspector
     {
@@ -104,7 +105,15 @@ namespace RuntimeUnityEditor.Core.Inspector
                         }
 
                         if (objectToOpen is UnityEngine.UI.Image img)
-                            _fieldCache.Add(GetExportTexEntry(img.mainTexture));
+                        {
+                            Texture txt;
+                            if (img.material.shader.name.Equals("Plasma/Component Standard v1.3 No Tess"))
+                                txt = img.material.GetTexture("_DetailAlbTex");
+                            else
+                                txt = img.material.GetTexture("_MainTex");
+
+                            _fieldCache.Add(GetExportTexEntry(txt));
+                        }
                     }
                     else if (objectToOpen is GameObject castedObj)
                     {
@@ -167,7 +176,7 @@ namespace RuntimeUnityEditor.Core.Inspector
                 }
                 catch (Exception ex)
                 {
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Warning, "[Inspector] CacheFields crash: " + ex);
+                    UnityEngine.Debug.LogWarning( "[Inspector] CacheFields crash: " + ex);
                 }
             }
 
@@ -183,7 +192,7 @@ namespace RuntimeUnityEditor.Core.Inspector
                 }
                 catch (Exception ex)
                 {
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Warning, "[Inspector] CacheFields crash: " + ex);
+                    UnityEngine.Debug.LogWarning( "[Inspector] CacheFields crash: " + ex);
                 }
             }
 

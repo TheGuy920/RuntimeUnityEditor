@@ -6,7 +6,7 @@
 using System;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Utils
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils
 {
     internal class ComboBox
     {
@@ -57,7 +57,7 @@ namespace RuntimeUnityEditor.Core.Utils
             var controlID = GUIUtility.GetControlID(FocusType.Passive);
 
             Vector2 currentMousePosition = Vector2.zero;
-            if (Event.current.GetTypeForControl(controlID) == EventType.mouseUp)
+            if (Event.current.GetTypeForControl(controlID) == EventType.MouseUp)
             {
                 if (isClickedComboButton)
                 {

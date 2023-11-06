@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using RuntimeUnityEditor.Core.Inspector.Entries;
+using Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries;
 
-namespace RuntimeUnityEditor.Core.Utils.Abstractions
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions
 {
     public class DnSpyHelper : IFeature
     {
@@ -35,7 +35,7 @@ namespace RuntimeUnityEditor.Core.Utils.Abstractions
                         if (File.Exists(_dnSpyPath) && _dnSpyPath.EndsWith("dnspy.exe", StringComparison.OrdinalIgnoreCase))
                             IsAvailable = true;
                         else
-                            RuntimeUnityEditorCore.Logger.Log(LogLevel.Error | LogLevel.Message, "[DnSpyHelper] Invalid dnSpy path. The path has to point to 64bit dnSpy.exe");
+                            UnityEngine.Debug.LogWarning( "[DnSpyHelper] Invalid dnSpy path. The path has to point to 64bit dnSpy.exe");
                     }
 
                     _confPath?.Invoke(newValue);
@@ -68,7 +68,7 @@ namespace RuntimeUnityEditor.Core.Utils.Abstractions
             }
             catch (Exception e)
             {
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Error | LogLevel.Message, "[DnSpyHelper] " + e.Message);
+                UnityEngine.Debug.LogWarning( "[DnSpyHelper] " + e.Message);
             }
         }
 
@@ -80,7 +80,7 @@ namespace RuntimeUnityEditor.Core.Utils.Abstractions
             }
             catch (Exception e)
             {
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Error | LogLevel.Message, "[DnSpyHelper] " + e.Message);
+                UnityEngine.Debug.LogWarning( "[DnSpyHelper] " + e.Message);
             }
         }
 
@@ -102,7 +102,7 @@ namespace RuntimeUnityEditor.Core.Utils.Abstractions
             }
             catch (Exception e)
             {
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Error | LogLevel.Message, "[DnSpyHelper] " + e.Message);
+                UnityEngine.Debug.LogWarning( "[DnSpyHelper] " + e.Message);
             }
         }
 
@@ -141,7 +141,7 @@ namespace RuntimeUnityEditor.Core.Utils.Abstractions
         {
             if (args == null) throw new ArgumentNullException(nameof(args));
             args = args + " " + DnSpyArgs;
-            RuntimeUnityEditorCore.Logger.Log(LogLevel.Info, $"[DnSpyHelper] Opening {DnSpyPath} {args}");
+            UnityEngine.Debug.Log( $"[DnSpyHelper] Opening {DnSpyPath} {args}");
             Process.Start(DnSpyPath, args);
         }
 

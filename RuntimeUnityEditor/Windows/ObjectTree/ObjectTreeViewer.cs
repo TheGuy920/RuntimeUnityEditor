@@ -3,17 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using RuntimeUnityEditor.Core.Gizmos;
-using RuntimeUnityEditor.Core.Inspector;
-using RuntimeUnityEditor.Core.Inspector.Entries;
-using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.API.Classes;
+using Plasma.Mods.RuntimeUnityEditor.Core.Gizmos;
+using Plasma.Mods.RuntimeUnityEditor.Core.Inspector;
+using Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace RuntimeUnityEditor.Core.ObjectTree
+namespace Plasma.Mods.RuntimeUnityEditor.Core.ObjectTree
 {
     public sealed class ObjectTreeViewer : Window<ObjectTreeViewer>
     {
@@ -165,7 +166,7 @@ namespace RuntimeUnityEditor.Core.ObjectTree
                 }
                 GUILayout.EndHorizontal();
 
-                if (needsHeightMeasure && Event.current.type == EventType.repaint)
+                if (needsHeightMeasure && Event.current.type == EventType.Repaint)
                     _singleObjectTreeItemHeight = Mathf.CeilToInt(GUILayoutUtility.GetLastRect().height);
             }
             else
@@ -375,7 +376,11 @@ namespace RuntimeUnityEditor.Core.ObjectTree
                         GUILayout.FlexibleSpace();
                         break;
                     case RawImage r:
-                        var rMainTexture = r.mainTexture;
+                        Texture rMainTexture;
+                        if (r.material.shader.name.Equals("Plasma/Component Standard v1.3 No Tess"))
+                            rMainTexture = r.material.GetTexture("_DetailAlbTex");
+                        else
+                            rMainTexture = r.material.GetTexture("_MainTex");
                         if (!ReferenceEquals(rMainTexture, null))
                         {
                             GUILayout.Label(rMainTexture);
@@ -392,9 +397,14 @@ namespace RuntimeUnityEditor.Core.ObjectTree
                         var reMaterial = re.material;
                         GUILayout.Label(reMaterial != null ? reMaterial.shader.name : "[No material]");
                         GUILayout.FlexibleSpace();
-                        if (reMaterial != null && reMaterial.mainTexture != null)
+                        Texture mnTx;
+                        if (reMaterial.shader.name.Equals("Plasma/Component Standard v1.3 No Tess"))
+                            mnTx = reMaterial.GetTexture("_DetailAlbTex");
+                        else
+                            mnTx = reMaterial.GetTexture("_MainTex");
+                        if (reMaterial != null && mnTx != null)
                         {
-                            var rendTex = reMaterial.mainTexture;
+                            var rendTex = mnTx;
                             GUILayout.Label(rendTex);
                             GUILayout.FlexibleSpace();
                             if (GUILayout.Button("S")) rendTex.SaveTextureToFileWithDialog();
@@ -545,7 +555,7 @@ namespace RuntimeUnityEditor.Core.ObjectTree
                 {
                     if (string.IsNullOrEmpty(_searchText))
                     {
-                        RuntimeUnityEditorCore.Logger.Log(LogLevel.Message | LogLevel.Warning, "Can't search for empty string");
+                        UnityEngine.Debug.LogWarning( "Can't search for empty string");
                     }
                     else
                     {
@@ -556,7 +566,7 @@ namespace RuntimeUnityEditor.Core.ObjectTree
                         var stackEntries = matchedTypes.Select(t => new StaticStackEntry(t, t.FullName)).ToList();
 
                         if (stackEntries.Count == 0)
-                            RuntimeUnityEditorCore.Logger.Log(LogLevel.Message | LogLevel.Warning, "No static type names contained the search string");
+                            UnityEngine.Debug.LogWarning( "No static type names contained the search string");
                         else if (stackEntries.Count == 1)
                             RuntimeUnityEditorCore.Instance.Inspector.Push(stackEntries.Single(), true);
                         else

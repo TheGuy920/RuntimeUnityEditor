@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Utils.Abstractions
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions
 {
     public abstract class InitSettings
     {

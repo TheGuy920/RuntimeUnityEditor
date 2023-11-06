@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
-using ColorUtility = RuntimeUnityEditor.Core.Utils.Abstractions.ColorUtility;
+using ColorUtility = Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions.ColorUtility;
 
-namespace RuntimeUnityEditor.Core.Utils
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils
 {
     /// <summary>
     /// Based on https://github.com/BepInEx/BepInEx/blob/master/BepInEx/Configuration/TomlTypeConverter.cs
     /// Original is under MIT License - Copyright(c) 2018 Bepis
     /// </summary>
-    internal static class TomlTypeConverter
+    public static class TomlTypeConverter
     {
         /// <summary>
         /// A serializer/deserializer combo for some type(s). Used by the config system.
@@ -173,7 +173,7 @@ namespace RuntimeUnityEditor.Core.Utils
             if (converter == null) throw new ArgumentNullException(nameof(converter));
             if (CanConvert(type))
             {
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Warning, "Tried to add a TomlConverter when one already exists for type " + type.FullName);
+                UnityEngine.Debug.LogWarning( "Tried to add a TomlConverter when one already exists for type " + type.FullName);
                 return false;
             }
 

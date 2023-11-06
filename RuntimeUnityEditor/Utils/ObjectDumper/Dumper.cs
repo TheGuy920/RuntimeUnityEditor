@@ -11,9 +11,9 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using HarmonyLib;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 
-namespace RuntimeUnityEditor.Core.Utils.ObjectDumper
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils.ObjectDumper
 {
     public static class Dumper
     {
@@ -23,14 +23,14 @@ namespace RuntimeUnityEditor.Core.Utils.ObjectDumper
             if (name == null) throw new ArgumentNullException(nameof(name));
 
             var fname = Path.GetTempFileName() + ".txt";
-            RuntimeUnityEditorCore.Logger.Log(LogLevel.Info, $"Dumping to {fname}");
+            UnityEngine.Debug.Log( $"Dumping to {fname}");
             using (var f = File.OpenWrite(fname))
             using (var sw = new StreamWriter(f, Encoding.UTF8))
             {
                 value.Dump(name, sw);
             }
             var pi = new ProcessStartInfo(fname) { UseShellExecute = true };
-            RuntimeUnityEditorCore.Logger.Log(LogLevel.Info, $"Opening {fname}");
+            UnityEngine.Debug.Log( $"Opening {fname}");
             Process.Start(pi);
             return fname;
         }

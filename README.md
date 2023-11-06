@@ -24,7 +24,7 @@ In-game inspector, editor and interactive console for applications made with Uni
 3. Extract the BepInEx folder from the archive directly into your game directory (you should already have a BepInEx folder there from previous step). Replace files if asked.
 4. To turn on press the F12 key when in-game. A window should appear on top of the game. If it doesn't appear, check logs for errors.
 
-Note: If the plugin fails to load under BepInEx 4 with a type load exception, move RuntimeUnityEditor.Core.dll to BepInEx/core folder.
+Note: If the plugin fails to load under BepInEx 4 with a type load exception, move PlasmaAPI.Mods.RuntimeUnityEditor.Core.dll to BepInEx/core folder.
 
 ### How to build
 1. Get Visual Studio 2019 (or later).

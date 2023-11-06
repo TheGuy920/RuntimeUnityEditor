@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
-using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core
+namespace Plasma.Mods.RuntimeUnityEditor.Core
 {
     public interface IWindow : IFeature
     {
@@ -92,7 +92,7 @@ namespace RuntimeUnityEditor.Core
             {
                 // Ignore mismatch exceptions caused by virtual lists, there will be an unity error shown anyways
                 if (!ex.Message.Contains("GUILayout"))
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Error, $"[{Title}] GUI crash: {ex}");
+                    UnityEngine.Debug.LogError( $"[{Title}] GUI crash: {ex}");
             }
 
             WindowRect = IMGUIUtils.DragResizeEat(id, WindowRect);

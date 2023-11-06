@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using HarmonyLib;
-using RuntimeUnityEditor.Core.Gizmos.lib;
-using RuntimeUnityEditor.Core.ObjectTree;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Gizmos.lib;
+using Plasma.Mods.RuntimeUnityEditor.Core.ObjectTree;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Gizmos
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Gizmos
 {
     public sealed class GizmoDrawer : FeatureBase<GizmoDrawer>
     {
@@ -127,7 +127,7 @@ namespace RuntimeUnityEditor.Core.Gizmos
             }
             else
             {
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Warning, "Unhandled collider type: " + obj.GetType());
+                UnityEngine.Debug.LogWarning( "Unhandled collider type: " + obj.GetType());
             }
         }
 

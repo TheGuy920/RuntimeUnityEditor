@@ -2,7 +2,7 @@
 using System.Collections;
 using HarmonyLib;
 
-namespace RuntimeUnityEditor.Core.Inspector.Entries
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries
 {
     public class ListCacheEntry : CacheEntryBase
     {

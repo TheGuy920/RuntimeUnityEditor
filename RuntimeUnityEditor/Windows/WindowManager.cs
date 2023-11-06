@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core
+namespace Plasma.Mods.RuntimeUnityEditor.Core
 {
     public class WindowManager : IFeature
     {
@@ -89,8 +89,8 @@ namespace RuntimeUnityEditor.Core
                 Time.timeScale = newVal;
 
             GUI.changed = false;
-            var n = GUILayout.Toggle(Application.runInBackground, "in BG");
-            if (GUI.changed) Application.runInBackground = n;
+            var n = GUILayout.Toggle(UnityEngine.Application.runInBackground, "in BG");
+            if (GUI.changed) UnityEngine.Application.runInBackground = n;
 
             GUILayout.Label("|");
 

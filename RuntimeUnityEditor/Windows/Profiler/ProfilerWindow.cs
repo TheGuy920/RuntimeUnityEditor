@@ -5,13 +5,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using HarmonyLib;
-using RuntimeUnityEditor.Core.Inspector.Entries;
-using RuntimeUnityEditor.Core.ObjectTree;
-using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries;
+using Plasma.Mods.RuntimeUnityEditor.Core.ObjectTree;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Profiler
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Profiler
 {
     public sealed class ProfilerWindow : Window<ProfilerWindow>
     {
@@ -196,7 +196,7 @@ namespace RuntimeUnityEditor.Core.Profiler
                             }
                             GUILayout.EndHorizontal();
 
-                            if (needsHeightMeasure && Event.current.type == EventType.repaint)
+                            if (needsHeightMeasure && Event.current.type == EventType.Repaint)
                                 _singleObjectTreeItemHeight = Mathf.CeilToInt(GUILayoutUtility.GetLastRect().height);
                         }
                         else
@@ -243,12 +243,12 @@ namespace RuntimeUnityEditor.Core.Profiler
                         try
                         {
                             var genericType = t.MakeGenericType(t.GetGenericArguments().Select(x => x.BaseType).ToArray());
-                            //RuntimeUnityEditorCore.Logger.Log(LogLevel.Debug, $"[Profiler] Hooking in generic class {t.FullName} -> {genericType.FullName}");
+                            //UnityEngine.Debug.Log( $"[Profiler] Hooking in generic class {t.FullName} -> {genericType.FullName}");
                             return genericType;
                         }
                         catch (Exception e)
                         {
-                            RuntimeUnityEditorCore.Logger.Log(LogLevel.Debug, $"[Profiler] Failed to hook in class {t.FullName} - {e.Message}");
+                            UnityEngine.Debug.Log( $"[Profiler] Failed to hook in class {t.FullName} - {e.Message}");
                             return null;
                         }
                     }
@@ -277,7 +277,7 @@ namespace RuntimeUnityEditor.Core.Profiler
                 }
                 catch (Exception e)
                 {
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Debug, $"[Profiler] Failed to hook {hit.FullDescription()} - {e.Message}");
+                    UnityEngine.Debug.Log( $"[Profiler] Failed to hook {hit.FullDescription()} - {e.Message}");
                 }
             }
         }

@@ -1,6 +1,6 @@
-﻿using RuntimeUnityEditor.Core.Utils;
+﻿using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
 
-namespace RuntimeUnityEditor.Core.Inspector.Entries
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Inspector.Entries
 {
     public class ReadonlyListCacheEntry : ReadonlyCacheEntry
     {

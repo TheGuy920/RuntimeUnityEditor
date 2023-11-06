@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.Utils.Abstractions
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions
 {
     internal static class AssetBundleManagerHelper
     {
@@ -35,11 +35,11 @@ namespace RuntimeUnityEditor.Core.Utils.Abstractions
                 try
                 {
                     var unloadedCount = ClearAssetBundleCache();
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Message, "Unloaded " + unloadedCount + " AssetBundles");
+                    UnityEngine.Debug.Log("Unloaded " + unloadedCount + " AssetBundles");
                 }
                 catch (Exception e)
                 {
-                    RuntimeUnityEditorCore.Logger.Log(LogLevel.Message | LogLevel.Error, "Failed to clear the AssetBundle cache - " + e);
+                    UnityEngine.Debug.LogWarning( "Failed to clear the AssetBundle cache - " + e);
                 }
             }
         }

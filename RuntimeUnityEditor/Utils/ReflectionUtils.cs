@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine.Events;
 
-namespace RuntimeUnityEditor.Core.Utils
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils
 {
     public static class ReflectionUtils
     {
@@ -63,7 +63,7 @@ namespace RuntimeUnityEditor.Core.Utils
                 // todo make this more powerful somehow, still doesn't show much, maybe with cecil?
                 var locals = kvp.Value.GetMethodBody()?.LocalVariables.Select(x => x.ToString());
                 if (locals != null) name += " - " + string.Join("; ", locals.ToArray());
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Message, name);
+                UnityEngine.Debug.Log(name);
             }
         }
     }

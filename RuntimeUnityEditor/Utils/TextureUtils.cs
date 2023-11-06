@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace RuntimeUnityEditor.Core.Utils
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils
 {
     /// <summary>
     /// Utility methods for working with texture objects.
@@ -82,7 +82,7 @@ namespace RuntimeUnityEditor.Core.Utils
                     var filename = OpenFileDialog.ShowDialog("Export texture to file...", null, ".PNG file|*.png", ".png", saveFileFlags, "export.png");
                     if (filename != null && filename.Length > 0)
                     {
-                        RuntimeUnityEditorCore.Logger.Log(LogLevel.Debug, "Writing encoded texture data to file at " + filename[0]);
+                        UnityEngine.Debug.Log( "Writing encoded texture data to file at " + filename[0]);
                         File.WriteAllBytes(filename[0], data);
                     }
                 }
@@ -93,9 +93,8 @@ namespace RuntimeUnityEditor.Core.Utils
             }
             catch (Exception e)
             {
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Error | LogLevel.Message,
-                    "Could not encode texture to PNG. Reason: " + e.Message);
-                RuntimeUnityEditorCore.Logger.Log(LogLevel.Error, e.StackTrace);
+                UnityEngine.Debug.LogError("Could not encode texture to PNG. Reason: " + e.Message);
+                UnityEngine.Debug.LogError( e.StackTrace);
             }
         }
 

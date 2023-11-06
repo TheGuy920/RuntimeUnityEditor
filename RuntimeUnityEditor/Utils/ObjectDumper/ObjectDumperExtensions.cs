@@ -3,7 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-namespace RuntimeUnityEditor.Core.Utils.ObjectDumper
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils.ObjectDumper
 {
     public static class ObjectDumperExtensions
     {

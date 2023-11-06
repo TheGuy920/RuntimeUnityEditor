@@ -1,8 +1,8 @@
-﻿using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+﻿using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 
-namespace RuntimeUnityEditor.Core.ObjectView
+namespace Plasma.Mods.RuntimeUnityEditor.Core.ObjectView
 {
     public sealed class ObjectViewWindow : Window<ObjectViewWindow>
     {

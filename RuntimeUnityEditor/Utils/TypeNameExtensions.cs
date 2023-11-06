@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HarmonyLib;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 
-namespace RuntimeUnityEditor.Core.Utils
+namespace Plasma.Mods.RuntimeUnityEditor.Core.Utils
 {
     public static class TypeNameExtensions
     {
@@ -90,7 +90,7 @@ namespace RuntimeUnityEditor.Core.Utils
                     return null;
 
                 default:
-                    Core.RuntimeUnityEditorCore.Logger.Log(LogLevel.Warning, "Unknown MemberInfo type: " + member.GetType().FullDescription());
+                    UnityEngine.Debug.LogWarning( "Unknown MemberInfo type: " + member.GetType().FullDescription());
                     return null;
             }
         }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Reflection;
-using RuntimeUnityEditor.Core.Utils;
-using RuntimeUnityEditor.Core.Utils.Abstractions;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils;
+using Plasma.Mods.RuntimeUnityEditor.Core.Utils.Abstractions;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace RuntimeUnityEditor.Core.UI
+namespace Plasma.Mods.RuntimeUnityEditor.Core.UI
 {
     public static class InterfaceMaker
     {
@@ -33,7 +33,7 @@ namespace RuntimeUnityEditor.Core.UI
                     }
                     catch (Exception ex)
                     {
-                        RuntimeUnityEditorCore.Logger.Log(LogLevel.Warning, "Could not load custom GUISkin - " + ex.Message);
+                        UnityEngine.Debug.LogWarning( "Could not load custom GUISkin - " + ex.Message);
                         _customSkin = GUI.skin;
                     }
                 }
